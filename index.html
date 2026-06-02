@@ -1,0 +1,2551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ümet Robert, Chef Privado en España. Experiencias culinarias íntimas y exclusivas a medida.">
+  <title>ÜMET | Chef Privado</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:ital,wght@0,200;0,300;0,400;1,300&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── TOKENS ─── */
+    :root {
+      --bg:        #F9F6F0;
+      --ink:       #111111;
+      --ink-55:    rgba(17,17,17,0.55);
+      --ink-30:    rgba(17,17,17,0.30);
+      --ink-10:    rgba(17,17,17,0.10);
+      --ink-06:    rgba(17,17,17,0.06);
+      --gold:      #C9A84C;
+      --gold-55:   rgba(201,168,76,0.55);
+      --gold-30:   rgba(201,168,76,0.30);
+      --gold-12:   rgba(201,168,76,0.12);
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --sans:      'Jost', system-ui, sans-serif;
+      --display-sans: 'Plus Jakarta Sans', var(--sans);
+      --expo:      cubic-bezier(0.16, 1, 0.3, 1);
+      --spring:    cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* grain — fixed, pointer-events none, GPU-isolated */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 980;
+      pointer-events: none;
+      opacity: 0.036;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 280px;
+    }
+
+    img { display: block; max-width: 100%; }
+    a   { text-decoration: none; }
+
+    /* ─── SCROLL REVEAL ─── */
+    .rv {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.05s var(--expo), transform 1.05s var(--expo);
+    }
+    .rv.on { opacity: 1; transform: none; }
+    .d1 { transition-delay: .10s; }
+    .d2 { transition-delay: .22s; }
+    .d3 { transition-delay: .36s; }
+    .d4 { transition-delay: .52s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rv, .h-loc, .h-name, .h-tag { transition: none; opacity: 1; transform: none; }
+      .h-rule { transition: none; width: 60px !important; }
+      .scroll-line { animation: none; }
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translate(-50%, -100px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      padding: 10px 32px;
+      background: rgba(249,246,240,0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--gold-30);
+      border-radius: 100px;
+      white-space: nowrap;
+      transition: transform .6s var(--expo), opacity .6s var(--expo);
+      box-shadow: 0 4px 30px rgba(17,17,17,0.04), 0 1px 3px rgba(17,17,17,0.02);
+    }
+
+    nav.visible {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nav-brand {
+      font-family: var(--serif);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border-right: 1px solid var(--ink-10);
+      padding-right: 20px;
+      line-height: 1.2;
+    }
+
+    .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-55);
+      position: relative;
+      padding-bottom: 4px;
+      font-weight: 400;
+      transition: color .4s var(--expo);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s var(--expo);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      width: 22px;
+      height: 18px;
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--ink);
+      transform-origin: center;
+      transition: transform .45s var(--spring), opacity .3s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mob-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 490;
+      background: rgba(249,246,240,0.97);
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .4s var(--expo), visibility .4s;
+    }
+    .mob-overlay.open { opacity: 1; visibility: visible; }
+    .mob-overlay a {
+      font-family: var(--serif);
+      font-size: 44px;
+      font-weight: 300;
+      color: var(--ink);
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .5s var(--expo), transform .5s var(--expo), color .3s;
+    }
+    .mob-overlay.open a { opacity: 1; transform: none; }
+    .mob-overlay a:nth-child(1) { transition-delay: .04s; }
+    .mob-overlay a:nth-child(2) { transition-delay: .09s; }
+    .mob-overlay a:nth-child(3) { transition-delay: .14s; }
+    .mob-overlay a:nth-child(4) { transition-delay: .19s; }
+    .mob-overlay a:nth-child(5) { transition-delay: .24s; }
+    .mob-overlay a:hover { color: var(--gold); }
+
+    /* ─── SHARED ATOMS ─── */
+    .eyebrow {
+      display: block;
+      font-size: 9px;
+      letter-spacing: .30em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .display {
+      font-family: var(--serif);
+      font-size: clamp(42px, 5.2vw, 78px);
+      font-weight: 300;
+      line-height: 1.01;
+      letter-spacing: -.018em;
+    }
+    .display em { font-style: italic; }
+
+    .g-rule {
+      display: block;
+      width: 52px;
+      height: 1px;
+      background: var(--gold);
+      margin: 28px 0;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .hero-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: calc(100vh - 40px);
+      min-height: calc(100dvh - 40px);
+      background: #E8E6E3;
+      border: 1.5px solid var(--ink);
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px 40px;
+    }
+
+    /* Hero Header */
+    .hero-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      z-index: 10;
+      position: relative;
+    }
+
+    .hero-brand {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .05em;
+      color: var(--ink);
+      font-family: var(--sans);
+    }
+
+    .hero-nav {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero-nav a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink);
+      transition: opacity .3s;
+      font-family: var(--sans);
+    }
+
+    .hero-nav a:hover {
+      opacity: 0.6;
+    }
+
+    .hero-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      width: 22px;
+      height: 18px;
+    }
+    .hero-toggle span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--ink);
+      transform-origin: center;
+      transition: transform .45s var(--spring), opacity .3s;
+    }
+
+    /* Hero Center (Photo and Superimposed Title) */
+    .hero-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero-photo-wrapper {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .hero-portrait-img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(1) contrast(1.1);
+      mix-blend-mode: multiply;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 1.5s var(--expo) .2s, transform 1.5s var(--expo) .2s;
+    }
+
+    body.loaded .hero-portrait-img {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hero-display-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--display-sans);
+      font-size: clamp(48px, 13vw, 240px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      line-height: 0.8;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      z-index: 3;
+      width: 100%;
+      text-align: center;
+      white-space: nowrap;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-display-title span {
+      display: inline-block;
+      transform: translateY(110%);
+      opacity: 0;
+      transition: transform 1.3s var(--expo), opacity 1.3s var(--expo);
+    }
+
+    body.loaded .hero-display-title span {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Hero Bottom */
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
+      z-index: 10;
+      position: relative;
+    }
+
+    .hero-socials {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-socials a {
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      transition: opacity .3s;
+    }
+
+    .hero-socials a:hover {
+      opacity: 0.6;
+    }
+
+    .hero-socials svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-role {
+      font-family: var(--sans);
+      font-size: clamp(18px, 2vw, 28px);
+      font-weight: 400;
+      line-height: 1.1;
+      text-align: right;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    /* ─── SHARED EDITORIAL ATOMS ─── */
+    .section-spacing {
+      padding: 140px 64px;
+      border-top: 1.5px solid var(--ink);
+    }
+    .inner-max {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+    
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .editorial-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-55);
+      margin-bottom: 24px;
+      display: block;
+    }
+    
+    .editorial-title {
+      font-family: var(--display-sans);
+      font-size: clamp(36px, 3.8vw, 64px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 32px;
+    }
+    
+    .editorial-title em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .circle-arrow-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--ink-30);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.4s var(--expo), border-color 0.4s, transform 0.45s var(--spring);
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .circle-arrow-btn svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.45s var(--spring);
+    }
+    .circle-arrow-btn:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--bg);
+    }
+    .circle-arrow-btn:hover svg {
+      transform: rotate(-45deg);
+    }
+
+    .tag-pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--ink-10);
+      color: var(--ink-55);
+      background: rgba(17,17,17,0.02);
+      transition: all 0.3s;
+    }
+    .tag-pill:hover {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    /* ─── SOBRE MÍ (Bento/Editorial) ─── */
+    #sobre {
+      background: var(--bg);
+    }
+    
+    .sobre-left {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    
+    .sobre-left .bio {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--ink-55);
+      margin-top: 0;
+      max-width: 52ch;
+    }
+    
+    .sobre-stat-card {
+      background: #E8E6E3;
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 480px;
+      position: relative;
+    }
+    
+    .sobre-stat-num {
+      font-family: var(--display-sans);
+      font-size: 72px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+    
+    .sobre-stat-lbl {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--ink-55);
+      line-height: 1.4;
+    }
+    
+    .sobre-dish-photo {
+      border-radius: 20px;
+      overflow: hidden;
+      max-width: 480px;
+      aspect-ratio: 4/3;
+    }
+    .sobre-dish-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.1);
+      transition: transform 0.8s var(--expo);
+    }
+    .sobre-dish-photo:hover img {
+      transform: scale(1.05);
+    }
+
+    .sobre-right {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      padding-top: 40px;
+      align-items: flex-end;
+    }
+    
+    .sobre-avatar-badge {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      align-self: flex-start;
+      margin-left: 20px;
+    }
+    .sobre-avatar-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.05);
+    }
+    
+    .sobre-points-list {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      width: 100%;
+    }
+    
+    .sobre-point-item {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--ink-10);
+    }
+    
+    .sobre-point-num {
+      font-family: var(--display-sans);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    
+    .sobre-point-content h3 {
+      font-family: var(--display-sans);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    
+    .sobre-point-content p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-55);
+    }
+
+    /* ─── SERVICIOS (Cards Grid) ─── */
+    #servicios {
+      background: var(--bg);
+    }
+    
+    .servicios-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 64px;
+    }
+    
+    .servicios-intro p {
+      font-size: 16px;
+      color: var(--ink-55);
+      max-width: 40ch;
+      line-height: 1.6;
+    }
+    
+    .service-card {
+      background: #E8E6E3;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.4s var(--expo);
+    }
+    
+    .service-card:hover {
+      transform: translateY(-8px);
+    }
+    
+    .service-card-img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+    }
+    
+    .service-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.1);
+      transition: transform 0.8s var(--expo);
+    }
+    .service-card:hover .service-card-img img {
+      transform: scale(1.05);
+    }
+    
+    .service-card-content {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    
+    .service-card-text {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .service-card-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    
+    .service-card-title {
+      font-family: var(--display-sans);
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+    
+    .service-card-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-55);
+    }
+    
+    .service-card-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    /* ─── TRAYECTORIA (Journey) ─── */
+    #experiencia {
+      background: var(--bg);
+    }
+    
+    .trajectory-journey {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0;
+    }
+    
+    .trajectory-item {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      padding: 48px 0;
+      border-bottom: 1px solid var(--ink-10);
+      align-items: start;
+      gap: 40px;
+    }
+    
+    .trajectory-item:first-child {
+      padding-top: 0;
+    }
+    
+    .trajectory-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .trajectory-date {
+      font-family: var(--display-sans);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+    
+    .trajectory-place {
+      font-family: var(--display-sans);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+    
+    .trajectory-details {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+    .trajectory-role {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    
+    .trajectory-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-55);
+      max-width: 70ch;
+    }
+    
+    /* Sub-gallery of dishes in experience */
+    .trajectory-gallery {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    
+    .trajectory-thumb {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    
+    .trajectory-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.1);
+      transition: transform 0.4s var(--expo), filter 0.4s;
+    }
+    
+    .trajectory-thumb:hover img {
+      transform: scale(1.1);
+      filter: grayscale(0.2) contrast(1.05);
+    }
+    
+    .trajectory-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ─── BANNER CTA ─── */
+    .promo-banner {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 100px 64px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-top: 1.5px solid var(--ink);
+    }
+    
+    .promo-banner-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) brightness(0.25) contrast(1.1);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    
+    .promo-banner-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+    
+    .promo-banner-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    
+    .promo-banner-title {
+      font-family: var(--display-sans);
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    
+    .promo-banner-title em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+    }
+    
+    .btn-promo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--bg);
+      padding: 16px 32px;
+      border-radius: 100px;
+      border: 1px solid var(--bg);
+      cursor: pointer;
+      transition: background 0.4s var(--expo), transform 0.4s;
+    }
+    .btn-promo:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    /* ─── GALERÍA (Latest Works Style) ─── */
+    #galeria {
+      background: var(--bg);
+    }
+    
+    .galeria-head {
+      margin-bottom: 64px;
+    }
+    
+    .gal-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    .gal-item {
+      background: #E8E6E3;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.4s var(--expo);
+      cursor: zoom-in;
+    }
+    
+    .gal-item:hover {
+      transform: translateY(-8px);
+    }
+    
+    .gal-item img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.1);
+      display: block;
+      transition: transform 0.8s var(--expo);
+    }
+    .gal-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    .gal-item-content {
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+    }
+    
+    .gal-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .gal-item-title {
+      font-family: var(--display-sans);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    
+    .gal-item-tag {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--ink-55);
+    }
+
+    /* ─── NOTAS GASTRONÓMICAS (Blog Section) ─── */
+    #blog {
+      background: var(--bg);
+    }
+    
+    .blog-card {
+      background: #E8E6E3;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.4s var(--expo);
+    }
+    
+    .blog-card:hover {
+      transform: translateY(-8px);
+    }
+    
+    .blog-card-img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+    }
+    
+    .blog-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.1);
+      transition: transform 0.8s var(--expo);
+    }
+    
+    .blog-card:hover .blog-card-img img {
+      transform: scale(1.05);
+    }
+    
+    .blog-card-content {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    
+    .blog-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+    }
+    
+    .blog-card-read {
+      color: var(--ink-55);
+    }
+    
+    .blog-card-title {
+      font-family: var(--display-sans);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    
+    .blog-card-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-55);
+    }
+
+    /* ─── CONTACTO & FORM ─── */
+    #contacto {
+      background: var(--bg);
+    }
+    
+    .contacto-intro {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+    .contacto-intro p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink-55);
+      max-width: 44ch;
+    }
+
+    /* ─── FOOTER (Premium Large Email style) ─── */
+    footer {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 80px 64px 40px;
+      border-top: 1.5px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+    
+    .footer-top {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    
+    .footer-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    
+    .giant-email-link {
+      font-family: var(--display-sans);
+      font-size: clamp(32px, 7vw, 92px);
+      font-weight: 800;
+      color: var(--bg);
+      text-decoration: none;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      transition: color 0.4s var(--expo);
+    }
+    
+    .giant-email-link:hover {
+      color: var(--gold);
+    }
+    
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(249,246,240,0.1);
+      padding-top: 32px;
+      width: 100%;
+    }
+    
+    .footer-brand {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    
+    .footer-right {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .footer-right span, .footer-right a {
+      font-size: 12px;
+      color: rgba(249,246,240,0.6);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-right a:hover {
+      color: var(--gold);
+    }
+
+    /* ─── FORM PREMIUM STYLES ─── */
+    .f-group {
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .f-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-55);
+    }
+    .f-input, .f-area {
+      width: 100%;
+      background: rgba(17,17,17,0.03);
+      border: 1px solid var(--ink-10);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink);
+      transition: all 0.3s var(--expo);
+    }
+    .f-input:focus, .f-area:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: var(--bg);
+      box-shadow: 0 0 0 3px var(--gold-12);
+    }
+    .btn-send {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--ink);
+      padding: 16px 32px;
+      border-radius: 100px;
+      border: 1px solid var(--ink);
+      cursor: pointer;
+      transition: all 0.4s var(--expo);
+      align-self: flex-start;
+    }
+    .btn-send:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink);
+    }
+
+    /* ─── DRAFT NOTES & BLUEPRINT ─── */
+    .proto-bar {
+      background: rgba(249,246,240,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 12px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      border-bottom: 1px solid var(--gold-30);
+      display: none; /* hidden by default */
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+    .proto-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: inline-block;
+      animation: proto-pulse 2s infinite ease-in-out;
+    }
+    @keyframes proto-pulse {
+      0%, 100% { opacity: 0.3; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+    .proto-bar em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 500;
+      text-transform: none;
+      font-size: 12px;
+      opacity: 0.85;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+    .draft-badge {
+      display: none; /* hidden by default */
+      padding: 2px 8px;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      color: var(--gold);
+      font-family: monospace;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .draft-note {
+      background: rgba(201,168,76,0.07);
+      border-left: 3px solid var(--gold);
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--ink-55);
+      margin: 16px 0 32px 0;
+      border-radius: 0 8px 8px 0;
+      font-family: var(--sans);
+      line-height: 1.6;
+      display: none; /* hidden by default */
+    }
+    .draft-note strong {
+      color: var(--ink);
+      font-weight: 500;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Blueprint active overrides */
+    body.blueprint-mode .proto-bar {
+      display: flex !important;
+    }
+    body.blueprint-mode .draft-badge {
+      display: inline-block !important;
+    }
+    body.blueprint-mode .draft-note {
+      display: block !important;
+    }
+
+    /* ─── VER MÁS / COLLAPSIBLE SECTIONS ─── */
+    .collapsible-wrapper {
+      max-height: 480px; /* default collapsed height */
+      overflow: hidden;
+      position: relative;
+      transition: max-height 0.8s var(--expo);
+      width: 100%;
+    }
+    .collapsible-wrapper::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 140px;
+      background: linear-gradient(to top, var(--bg) 15%, rgba(249,246,240,0));
+      pointer-events: none;
+      transition: opacity 0.5s var(--expo);
+      z-index: 5;
+    }
+    .collapsible-wrapper.expanded {
+      max-height: 2500px !important; /* expanded state */
+    }
+    .collapsible-wrapper.expanded::after {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .btn-ver-mas-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+    .btn-ver-mas {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--ink-30);
+      padding: 14px 32px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.3s var(--expo);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ver-mas:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+    @media (min-width: 901px) {
+      #wrap-blog {
+        max-height: none !important;
+      }
+      #wrap-blog::after {
+        display: none !important;
+      }
+      #wrap-blog + .btn-ver-mas-container {
+        display: none !important;
+      }
+    }
+    
+    /* ─── EDITORIAL EXTRA TOUCHES ─── */
+    .editorial-dropcap::first-letter {
+      font-family: var(--serif);
+      font-size: 4.8rem;
+      float: left;
+      line-height: 0.75;
+      margin-top: 6px;
+      margin-right: 12px;
+      color: var(--gold);
+      font-weight: 300;
+    }
+    .editorial-caption {
+      display: block;
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-55);
+      margin-top: 14px;
+      line-height: 1.4;
+      border-left: 1.5px solid var(--gold);
+      padding-left: 12px;
+      font-weight: 400;
+      text-align: left;
+    }
+    
+    .editorial-quote-section {
+      background: var(--bg);
+      text-align: center;
+      padding: 120px 24px;
+      border-top: 1.5px solid var(--ink);
+    }
+    .editorial-quote-container {
+      max-width: 850px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .quote-mark {
+      font-family: var(--serif);
+      font-size: 90px;
+      line-height: 1;
+      color: var(--gold);
+      height: 45px;
+      display: block;
+      user-select: none;
+    }
+    .editorial-quote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.35;
+      color: var(--ink);
+      font-weight: 300;
+    }
+    .editorial-author {
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-55);
+      font-style: normal;
+      margin-top: 20px;
+    }
+    
+    /* Blueprint toggle button */
+    .blueprint-toggle {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 995;
+      background: var(--ink);
+      color: var(--bg);
+      border: 1.5px solid var(--gold);
+      padding: 12px 20px;
+      border-radius: 100px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.2);
+      transition: all 0.3s var(--expo);
+    }
+    .blueprint-toggle:hover {
+      background: var(--gold);
+      color: var(--ink);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 35px rgba(201,168,76,0.3);
+    }
+    .blueprint-toggle svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      transition: transform 0.4s var(--expo);
+    }
+    .blueprint-toggle:hover svg {
+      transform: rotate(90deg);
+    }
+
+    /* Blueprint mode overlay and guides */
+    body.blueprint-mode::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 990;
+      background-image: 
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    body.blueprint-mode .section-spacing,
+    body.blueprint-mode .grid-2col,
+    body.blueprint-mode .grid-3col,
+    body.blueprint-mode .service-card,
+    body.blueprint-mode .trajectory-item,
+    body.blueprint-mode .blog-card,
+    body.blueprint-mode .sobre-stat-card,
+    body.blueprint-mode .hero-container,
+    body.blueprint-mode footer {
+      outline: 1.5px dashed var(--gold-55) !important;
+      position: relative;
+    }
+    body.blueprint-mode .section-spacing::before {
+      content: '<section #' attr(id) '>';
+      position: absolute;
+      top: 6px;
+      left: 12px;
+      font-family: monospace;
+      font-size: 10px;
+      color: var(--gold);
+      background: var(--bg);
+      padding: 2px 6px;
+      border: 1px solid var(--gold-30);
+      border-radius: 4px;
+      z-index: 10;
+      line-height: 1;
+    }
+    body.blueprint-mode .grid-2col::before {
+      content: 'grid-2col';
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      font-family: monospace;
+      font-size: 8px;
+      color: var(--gold);
+      background: var(--bg);
+      padding: 1px 4px;
+      border: 1px solid var(--gold-30);
+      line-height: 1;
+      z-index: 5;
+    }
+    body.blueprint-mode .grid-3col::before {
+      content: 'grid-3col';
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      font-family: monospace;
+      font-size: 8px;
+      color: var(--gold);
+      background: var(--bg);
+      padding: 1px 4px;
+      border: 1px solid var(--gold-30);
+      line-height: 1;
+      z-index: 5;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      .grid-3col {
+        grid-template-columns: 1fr 1fr;
+      }
+      .gal-cols {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    @media (max-width: 900px) {
+      /* General Spacing */
+      .section-spacing {
+        padding: 80px 24px;
+      }
+      .grid-2col {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      /* Navigation & Header Overrides */
+      .hero-nav {
+        display: none !important;
+      }
+      .hero-toggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+      }
+      .nav-links {
+        display: none !important;
+      }
+      .nav-toggle {
+        display: flex !important;
+      }
+      
+      /* Sobre Mí */
+      .sobre-right {
+        align-items: start;
+        padding-top: 0;
+      }
+      .sobre-avatar-badge {
+        margin-left: 0;
+        width: 70px;
+        height: 70px;
+      }
+      
+      /* Servicios */
+      .servicios-intro {
+        flex-direction: column;
+        align-items: start;
+        gap: 16px;
+      }
+      
+      /* Trayectoria */
+      .trajectory-item {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 32px 0;
+      }
+      .trajectory-meta {
+        gap: 6px;
+      }
+      
+      /* Banner */
+      .promo-banner {
+        padding: 80px 24px;
+      }
+      
+      /* Footer */
+      footer {
+        padding: 60px 24px 30px;
+        gap: 40px;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+      .footer-right {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .grid-3col {
+        grid-template-columns: 1fr;
+      }
+      .gal-cols {
+        grid-template-columns: 1fr;
+      }
+      
+      /* Hero Title & Portrait Adjustments */
+      .hero-container {
+        padding: 24px 20px;
+      }
+      .hero-display-title {
+        font-size: clamp(38px, 14vw, 120px);
+        letter-spacing: -0.03em;
+      }
+      .hero-role {
+        font-size: 16px;
+      }
+
+      /* Blueprint button adjustments */
+      .blueprint-toggle {
+        bottom: 16px;
+        left: 16px;
+        padding: 10px 16px;
+        font-size: 10px;
+      }
+
+      /* Prototype status bar wrap */
+      .proto-bar {
+        font-size: 9.5px;
+        padding: 8px 12px;
+        flex-direction: column;
+        gap: 4px;
+        line-height: 1.3;
+      }
+      .proto-bar em {
+        font-size: 11px;
+      }
+
+      /* Draft Note padding for mobile */
+      .draft-note {
+        padding: 12px 14px;
+        font-size: 12px;
+        margin: 12px 0 24px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── BANNER DE PROTOTIPO ── -->
+  <div class="proto-bar">
+    <span class="proto-dot"></span>
+    <span>Prototipo de Diseño v0.2 · En Construcción</span>
+    <em>— Diseñado para Ümet Robert —</em>
+  </div>
+
+  <!-- ── NAV ── -->
+  <nav role="navigation" aria-label="Navegación principal">
+    <a href="#hero" class="nav-brand">ÜMET</a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre mí</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#experiencia">Trayectoria</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="nav-toggle" id="navToggle" role="button" tabindex="0" aria-expanded="false" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div class="mob-overlay" id="mobOverlay" role="dialog" aria-label="Menú">
+    <a href="#sobre"       onclick="closeNav()">Sobre mí</a>
+    <a href="#servicios"   onclick="closeNav()">Servicios</a>
+    <a href="#galeria"     onclick="closeNav()">Galería</a>
+    <a href="#experiencia" onclick="closeNav()">Trayectoria</a>
+    <a href="#contacto"    onclick="closeNav()">Contacto</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section id="hero" aria-label="Portada">
+    <div class="hero-container">
+      <!-- Header -->
+      <header class="hero-header">
+        <a href="#hero" class="hero-brand">© Ümet Robert &ensp;·&ensp; Chef Privado</a>
+        <div class="hero-nav">
+          <a href="#sobre">Sobre mí</a>
+          <a href="#servicios">Servicios</a>
+          <a href="#galeria">Galería</a>
+          <a href="#experiencia">Trayectoria</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+        <div class="hero-toggle" id="heroNavToggle" role="button" tabindex="0" aria-label="Abrir menú">
+          <span></span><span></span><span></span>
+        </div>
+      </header>
+
+      <!-- Center: Photo and overlay title -->
+      <div class="hero-center">
+        <div class="hero-photo-wrapper">
+          <img
+            src="chef_portrait.png"
+            alt="Ümet Robert, Chef Privado"
+            class="hero-portrait-img"
+            loading="eager"
+            fetchpriority="high"
+          >
+        </div>
+        <h1 class="hero-display-title">Ümet Robert</h1>
+      </div>
+
+      <!-- Bottom -->
+      <div class="hero-bottom">
+        <!-- Social links -->
+        <div class="hero-socials">
+          <a href="https://www.instagram.com/umet_robert" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+            </svg>
+          </a>
+          <a href="mailto:info@umet.es" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/34600000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.864-9.864.002-2.637-1.019-5.117-2.875-6.976C16.592 1.888 14.114.865 11.485.865 6.046.865 1.623 5.286 1.619 10.725c-.001 1.761.46 3.478 1.332 5.022L1.91 21.053l5.81-1.523c-1.56 1.01-3.242 1.54-5.073 1.54z"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Role -->
+        <div class="hero-role">
+          Chef Privado<br>
+          Gastronomía de Autor
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOBRE MÍ ── -->
+  <section id="sobre" class="section-spacing" aria-label="Sobre mí">
+    <div class="inner-max grid-2col">
+      <div class="sobre-left rv">
+        <span class="draft-badge">Sección: Sobre Mí (Borrador de Biografía)</span>
+        <span class="editorial-eyebrow">Sobre mí</span>
+        <h2 class="editorial-title">El arte de<br><em>cocinar en privado</em></h2>
+        <div class="draft-note">
+          <strong>Propuesta Narrativa:</strong> Este bloque de texto se redactará a medida de tu trayectoria real y filosofía de cocina. De momento proponemos un tono sobrio y sugerente enfocado a la exclusividad.
+        </div>
+        <p class="bio editorial-dropcap">
+          Cada plato nace de una conversación. Formado entre los fogones de San Sebastián y las cocinas de la alta gastronomía europea, mi trabajo no es simplemente alimentar: es crear una atmósfera, un recuerdo, un momento suspendido en el tiempo.
+        </p>
+        <p class="bio">
+          Trabajo en casas privadas, villas y espacios singulares a lo largo de España, adaptando cada menú a quienes lo viven. La intimidad de la mesa privada es el escenario donde la cocina alcanza su forma más pura.
+        </p>
+        
+        <!-- Stat Card -->
+        <div class="sobre-stat-card rv d1">
+          <div class="sobre-stat-num">10+</div>
+          <div class="sobre-stat-lbl">Años de trayectoria culinaria en restaurantes de prestigio y servicios privados de lujo.</div>
+        </div>
+        
+        <!-- Dish Photo -->
+        <div class="sobre-dish-photo rv d2">
+          <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=85&auto=format&fit=crop" alt="Manos del Chef emplatando un plato con pinzas">
+          <span class="editorial-caption">Fig. 01 — Detalle de técnica y delicadeza en el emplatado de autor.</span>
+        </div>
+      </div>
+
+      <div class="sobre-right rv">
+        <div class="sobre-avatar-badge rv d1">
+          <img src="chef_portrait.png" alt="Chef Ümet Robert">
+        </div>
+        
+        <div class="sobre-points-list">
+          <div class="sobre-point-item rv d2">
+            <span class="sobre-point-num">01</span>
+            <div class="sobre-point-content">
+              <h3>Formación de Élite</h3>
+              <p>Graduado del prestigioso Basque Culinary Center y formado en las cocinas de Mugaritz y Elkano, pilares de la cocina contemporánea española.</p>
+            </div>
+          </div>
+          
+          <div class="sobre-point-item rv d3">
+            <span class="sobre-point-num">02</span>
+            <div class="sobre-point-content">
+              <h3>Gastronomía Singular</h3>
+              <p>Diseño de menús de degustación únicos para cada ocasión, adaptados rigurosamente a las preferencias, ritmo y alérgenos de cada comensal.</p>
+            </div>
+          </div>
+          
+          <div class="sobre-point-item rv d4">
+            <span class="sobre-point-num">03</span>
+            <div class="sobre-point-content">
+              <h3>Compromiso de Origen</h3>
+              <p>Selección diaria de ingredientes locales y de temporada, priorizando la pesca artesanal del Cantábrico y huertos ecológicos cercanos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDITORIAL PULL QUOTE ── -->
+  <section class="editorial-quote-section" aria-label="Cita editorial">
+    <div class="inner-max">
+      <div class="editorial-quote-container rv">
+        <span class="quote-mark">“</span>
+        <blockquote class="editorial-quote">
+          La cocina no es solo técnica; es la memoria del sabor traducida en un instante de intimidad en torno a la mesa.
+        </blockquote>
+        <cite class="editorial-author">— Ümet Robert</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICIOS ── -->
+  <section id="servicios" class="section-spacing" aria-label="Servicios">
+    <div class="inner-max">
+      <div class="servicios-intro rv">
+        <div>
+          <span class="draft-badge">Sección: Servicios y Formatos</span>
+          <span class="editorial-eyebrow">Servicios</span>
+          <h2 class="editorial-title">Lo que<br><em>ofrezco</em></h2>
+        </div>
+        <div>
+          <p>Cada experiencia se diseña desde cero, en función de sus necesidades, el espacio y quienes lo comparten.</p>
+          <div class="draft-note" style="margin-top: 16px; margin-bottom: 0;">
+            <strong>Propuesta de Estructura:</strong> Hemos planteado 3 líneas de servicio (Cenas de degustación, Eventos privados y Menús recurrentes/de temporada). Podremos redefinir los alcances y nombres de los servicios según tu cartera final.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3col rv d1">
+        <!-- Servicio 1 -->
+        <div class="service-card">
+          <div class="service-card-img">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=700&q=82&auto=format&fit=crop" alt="Cena privada emplatada">
+          </div>
+          <div class="service-card-content">
+            <div class="service-card-text">
+              <span class="service-card-tag">Experiencia Íntima</span>
+              <h3 class="service-card-title">Cenas<br>Privadas</h3>
+              <p class="service-card-desc">Menús de degustación de 5 a 9 tiempos para grupos íntimos. Narrativa gastronómica y servicio exclusivo en su residencia o villa.</p>
+            </div>
+            <div class="service-card-footer">
+              <a href="#contacto" class="circle-arrow-btn" aria-label="Consultar sobre Cenas Privadas">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 2 -->
+        <div class="service-card">
+          <div class="service-card-img">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=82&auto=format&fit=crop" alt="Evento exclusivo">
+          </div>
+          <div class="service-card-content">
+            <div class="service-card-text">
+              <span class="service-card-tag">Coordinación Integral</span>
+              <h3 class="service-card-title">Eventos<br>Exclusivos</h3>
+              <p class="service-card-desc">Celebraciones privadas, eventos corporativos boutique y retiros de alta gama. Planificación culinaria completa y mise en place impecable.</p>
+            </div>
+            <div class="service-card-footer">
+              <a href="#contacto" class="circle-arrow-btn" aria-label="Consultar sobre Eventos Exclusivos">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 3 -->
+        <div class="service-card">
+          <div class="service-card-img">
+            <img src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=700&q=82&auto=format&fit=crop" alt="Menús personalizados de autor">
+          </div>
+          <div class="service-card-content">
+            <div class="service-card-text">
+              <span class="service-card-tag">Cocina de Autor</span>
+              <h3 class="service-card-title">Menús<br>Personalizados</h3>
+              <p class="service-card-desc">Diseño de cartas personalizadas y menús semanales para residencias temporales, retiros de bienestar o estancias prolongadas en villas.</p>
+            </div>
+            <div class="service-card-footer">
+              <a href="#contacto" class="circle-arrow-btn" aria-label="Consultar sobre Menús Personalizados">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCIA ── -->
+  <section id="experiencia" class="section-spacing" aria-label="Trayectoria">
+    <div class="inner-max grid-2col">
+      <div class="rv">
+        <span class="draft-badge">Sección: Trayectoria Profesional</span>
+        <span class="editorial-eyebrow">Trayectoria</span>
+        <h2 class="editorial-title">Mi camino<br><em>gastronómico</em></h2>
+        <div class="draft-note">
+          <strong>Línea de Tiempo Sugerida:</strong> Aquí estructuramos tu experiencia cronológicamente (ej. formación, paso por restaurantes de renombre, proyectos propios). Podemos cambiar los años y los hitos con tus datos reales.
+        </div>
+        <p style="font-size: 16px; color: var(--ink-55); line-height: 1.6; max-width: 40ch;">
+          Una trayectoria forjada entre restaurantes con estrellas Michelin, academia culinaria avanzada y experiencias privadas en toda Europa.
+        </p>
+      </div>
+
+      <div class="trajectory-journey rv d1">
+        <!-- Item 1 -->
+        <div class="trajectory-item rv">
+          <div class="trajectory-meta">
+            <span class="trajectory-date">2019 — Presente</span>
+            <span class="trajectory-place">España, Francia, Portugal</span>
+          </div>
+          <div class="trajectory-details">
+            <h3 class="trajectory-role">Chef Privado Independiente</h3>
+            <p class="trajectory-desc">Creación de menús personalizados para clientes internacionales, villas de lujo y retiros premium. Gestión de eventos gastronómicos íntimos exclusivos de principio a fin.</p>
+            <div class="trajectory-gallery">
+              <div class="trajectory-thumb">
+                <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=500&q=80&auto=format&fit=crop" alt="Detalle de plato gourmet">
+              </div>
+              <div class="trajectory-thumb">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500&q=80&auto=format&fit=crop" alt="Mesa de comedor privada">
+              </div>
+              <div class="trajectory-thumb">
+                <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=500&q=80&auto=format&fit=crop" alt="Experiencia culinaria privada">
+              </div>
+            </div>
+            <div class="trajectory-tags">
+              <span class="tag-pill">Villas de Lujo</span>
+              <span class="tag-pill">Alta Cocina</span>
+              <span class="tag-pill">Europa</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="trajectory-item rv">
+          <div class="trajectory-meta">
+            <span class="trajectory-date">2016 — 2019</span>
+            <span class="trajectory-place">Restaurante Elkano, Getaria</span>
+          </div>
+          <div class="trajectory-details">
+            <h3 class="trajectory-role">Sous Chef</h3>
+            <p class="trajectory-desc">Especialización en el dominio del fuego y la parrilla tradicional vasca. Gestión del equipo y selección directa del pescado del día en el puerto.</p>
+            <div class="trajectory-gallery">
+              <div class="trajectory-thumb">
+                <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80&auto=format&fit=crop" alt="Pescado a la brasa">
+              </div>
+              <div class="trajectory-thumb">
+                <img src="https://images.unsplash.com/photo-1534080391025-09795d197a5b?w=500&q=80&auto=format&fit=crop" alt="Marisco fresco">
+              </div>
+              <div class="trajectory-thumb">
+                <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&q=80&auto=format&fit=crop" alt="Plato marinero Elkano">
+              </div>
+            </div>
+            <div class="trajectory-tags">
+              <span class="tag-pill">Brasas</span>
+              <span class="tag-pill">Pescados</span>
+              <span class="tag-pill">1 Estrella Michelin</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wrapper for remaining items -->
+        <div class="collapsible-wrapper" id="wrap-experiencia" style="max-height: 0px;">
+          <!-- Item 3 -->
+          <div class="trajectory-item rv" style="border-top: 1px solid var(--ink-10); padding-top: 48px;">
+            <div class="trajectory-meta">
+              <span class="trajectory-date">2013 — 2016</span>
+              <span class="trajectory-place">Restaurante Mugaritz, Rentería</span>
+            </div>
+            <div class="trajectory-details">
+              <h3 class="trajectory-role">Chef de Partie</h3>
+              <p class="trajectory-desc">Participación en el equipo de I+D culinario, experimentación con texturas, técnicas de vanguardia y menús conceptuales sin precedentes.</p>
+              <div class="trajectory-gallery">
+                <div class="trajectory-thumb">
+                  <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80&auto=format&fit=crop" alt="Composición vanguardista">
+                </div>
+                <div class="trajectory-thumb">
+                  <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&q=80&auto=format&fit=crop" alt="Ingredientes conceptuales Mugaritz">
+                </div>
+                <div class="trajectory-thumb">
+                  <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&q=80&auto=format&fit=crop" alt="Textura y detalle plato">
+                </div>
+              </div>
+              <div class="trajectory-tags">
+                <span class="tag-pill">I+D</span>
+                <span class="tag-pill">Vanguardia</span>
+                <span class="tag-pill">2 Estrellas Michelin</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="trajectory-item rv">
+            <div class="trajectory-meta">
+              <span class="trajectory-date">2011 — 2013</span>
+              <span class="trajectory-place">Basque Culinary Center</span>
+            </div>
+            <div class="trajectory-details">
+              <h3 class="trajectory-role">Formación Avanzada</h3>
+              <p class="trajectory-desc">Estudios superiores en ciencias gastronómicas, técnicas culinarias internacionales y gestión de restaurantes de alta cocina.</p>
+              <div class="trajectory-gallery">
+                <div class="trajectory-thumb">
+                  <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=500&q=80&auto=format&fit=crop" alt="Clase culinaria avanzada">
+                </div>
+                <div class="trajectory-thumb">
+                  <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=500&q=80&auto=format&fit=crop" alt="Práctica en cocina BCC">
+                </div>
+              </div>
+              <div class="trajectory-tags">
+                <span class="tag-pill">Técnica</span>
+                <span class="tag-pill">Ciencia Culinaria</span>
+                <span class="tag-pill">Academia</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-ver-mas-container">
+          <button class="btn-ver-mas" onclick="toggleCollapsible('wrap-experiencia', this)">
+            <span>Ver más trayectoria</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BANNER PROMOCIONAL ── -->
+  <section class="promo-banner" aria-label="Reserva de experiencias">
+    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=1600&q=80&auto=format&fit=crop" class="promo-banner-bg" alt="Cocina profesional con fuego">
+    <div class="promo-banner-content rv">
+      <span class="promo-banner-tag">Disponibilidad Limitada</span>
+      <h2 class="promo-banner-title">Lleva la alta cocina a tu mesa.<br><em>Diseñemos un menú para tu próximo evento.</em></h2>
+      <a href="#contacto" class="btn-promo">Reservar Fecha</a>
+    </div>
+  </section>
+
+  <!-- ── GALERÍA ── -->
+  <section id="galeria" class="section-spacing" aria-label="Galería">
+    <div class="inner-max">
+      <div class="galeria-head rv">
+        <span class="editorial-eyebrow">Galería</span>
+        <h2 class="editorial-title">Materia prima<br><em>&amp; creaciones</em></h2>
+      </div>
+
+      <div class="collapsible-wrapper" id="wrap-galeria">
+        <div class="gal-cols rv d1">
+          <div class="gal-item">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=82&auto=format&fit=crop" alt="Plato con flores comestibles y salsas">
+            <div class="gal-item-content">
+              <div class="gal-item-info">
+                <span class="gal-item-title">Composición Vanguardista</span>
+                <span class="gal-item-tag">Materia Prima</span>
+              </div>
+              <span class="circle-arrow-btn" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="gal-item">
+            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800&q=82&auto=format&fit=crop" alt="Ensalada minimalista y verduras frescas">
+            <div class="gal-item-content">
+              <div class="gal-item-info">
+                <span class="gal-item-title">Ingredientes de Estación</span>
+                <span class="gal-item-tag">Producto Local</span>
+              </div>
+              <span class="circle-arrow-btn" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="gal-item">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=82&auto=format&fit=crop" alt="Emplatado gourmet en vajilla de diseño">
+            <div class="gal-item-content">
+              <div class="gal-item-info">
+                <span class="gal-item-title">Texturas Culinarias</span>
+                <span class="gal-item-tag">Técnica</span>
+              </div>
+              <span class="circle-arrow-btn" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="gal-item">
+            <img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=800&q=82&auto=format&fit=crop" alt="Chef preparando pasta fresca">
+            <div class="gal-item-content">
+              <div class="gal-item-info">
+                <span class="gal-item-title">Proceso y Disciplina</span>
+                <span class="gal-item-tag">Mise En Place</span>
+              </div>
+              <span class="circle-arrow-btn" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="gal-item">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=82&auto=format&fit=crop" alt="Detalle de plato marinado">
+            <div class="gal-item-content">
+              <div class="gal-item-info">
+                <span class="gal-item-title">Detalle Culinario</span>
+                <span class="gal-item-tag">Equilibrio</span>
+              </div>
+              <span class="circle-arrow-btn" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="gal-item">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=82&auto=format&fit=crop" alt="Mesa de comedor rústica en el exterior">
+            <div class="gal-item-content">
+              <div class="gal-item-info">
+                <span class="gal-item-title">Mesa Compartida</span>
+                <span class="gal-item-tag">Atmósfera</span>
+              </div>
+              <span class="circle-arrow-btn" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-ver-mas-container">
+        <button class="btn-ver-mas" onclick="toggleCollapsible('wrap-galeria', this)">
+          <span>Ver más imágenes</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Imagen ampliada" aria-modal="true">
+    <span class="lb-close" id="lbClose" tabindex="0" role="button" aria-label="Cerrar">Cerrar &times;</span>
+    <img src="" alt="" id="lbImg">
+  </div>
+
+  <!-- ── NOTAS GASTRONÓMICAS ── -->
+  <section id="blog" class="section-spacing" aria-label="Notas gastronómicas">
+    <div class="inner-max">
+      <div class="servicios-intro rv">
+        <div>
+          <span class="draft-badge">Sección: Blog / Notas Gastronómicas (Propuesta)</span>
+          <span class="editorial-eyebrow">Notas</span>
+          <h2 class="editorial-title">Ideas &amp;<br><em>perspectivas</em></h2>
+        </div>
+        <div>
+          <p>Reflexiones sobre técnica, producto local y la evolución del servicio gastronómico privado.</p>
+          <div class="draft-note" style="margin-top: 16px; margin-bottom: 0;">
+            <strong>Propuesta de Contenidos:</strong> En este espacio proponemos artículos cortos o recetas que refuercen tu autoridad como experto gastronómico. Los títulos actuales son ejemplos creativos para ilustrar el look final.
+          </div>
+        </div>
+      </div>
+
+      <div class="collapsible-wrapper" id="wrap-blog" style="max-height: 520px;">
+        <div class="grid-3col rv d1">
+          <!-- Card 1 -->
+          <article class="blog-card">
+            <div class="blog-card-img">
+              <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=700&q=80&auto=format&fit=crop" alt="Parrilla con pescado de temporada">
+            </div>
+            <div class="blog-card-content">
+              <div class="blog-card-meta">
+                <span>Técnica</span>
+                <span class="blog-card-read">5 min lectura</span>
+              </div>
+              <div>
+                <h3 class="blog-card-title">El secreto del rodaballo a la brasa</h3>
+                <p class="blog-card-desc">Una inmersión profunda en la técnica tradicional de la costa vasca: control del calor, leña de encina y la mítica emulsión de la casa.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="blog-card">
+            <div class="blog-card-img">
+              <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80&auto=format&fit=crop" alt="Platos finos en mesa privada">
+            </div>
+            <div class="blog-card-content">
+              <div class="blog-card-meta">
+                <span>Menús</span>
+                <span class="blog-card-read">4 min lectura</span>
+              </div>
+              <div>
+                <h3 class="blog-card-title">Cómo diseñar el menú de degustación ideal</h3>
+                <p class="blog-card-desc">La progresión y balance de texturas, sabores e intensidades para crear una experiencia equilibrada y memorable en el hogar.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="blog-card">
+            <div class="blog-card-img">
+              <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=700&q=80&auto=format&fit=crop" alt="Detalle de verduras locales frescas">
+            </div>
+            <div class="blog-card-content">
+              <div class="blog-card-meta">
+                <span>Sostenibilidad</span>
+                <span class="blog-card-read">6 min lectura</span>
+              </div>
+              <div>
+                <h3 class="blog-card-title">El lujo de la proximidad absoluta</h3>
+                <p class="blog-card-desc">Por qué el verdadero refinamiento en la cocina moderna radica en la trazabilidad del ingrediente y el apoyo a pequeños productores locales.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="btn-ver-mas-container">
+        <button class="btn-ver-mas" onclick="toggleCollapsible('wrap-blog', this)">
+          <span>Ver más notas</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACTO ── -->
+  <section id="contacto" class="section-spacing" aria-label="Contacto">
+    <div class="inner-max grid-2col">
+      <div class="contacto-intro rv">
+        <span class="editorial-eyebrow">Contacto</span>
+        <h2 class="editorial-title">Hablemos de su<br><em>próxima mesa</em></h2>
+        <p class="contacto-note">
+          Para reservas de fechas, consultas de presupuestos adaptados o simplemente para concretar una idea gastronómica. Respondo en menos de 24 horas.
+        </p>
+        <a
+          href="https://www.instagram.com/umet_robert"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ig-link"
+          aria-label="Instagram de Ümet Robert"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/>
+          </svg>
+          @umet_robert
+        </a>
+      </div>
+
+      <div class="rv d1">
+        <form id="cForm" novalidate aria-label="Formulario de contacto">
+          <div class="f-group">
+            <label class="f-label" for="nombre">Nombre <span aria-hidden="true">*</span></label>
+            <input class="f-input" type="text" id="nombre" name="nombre"
+              placeholder="Su nombre completo"
+              autocomplete="name" required
+              aria-required="true">
+          </div>
+
+          <div class="f-group">
+            <label class="f-label" for="email">Correo electrónico <span aria-hidden="true">*</span></label>
+            <input class="f-input" type="email" id="email" name="email"
+              placeholder="su@correo.com"
+              autocomplete="email" required
+              aria-required="true">
+          </div>
+
+          <div class="f-group">
+            <label class="f-label" for="mensaje">Mensaje <span aria-hidden="true">*</span></label>
+            <textarea class="f-area" id="mensaje" name="mensaje" rows="5"
+              placeholder="Cuénteme sobre su próxima experiencia..."
+              required aria-required="true"></textarea>
+          </div>
+
+          <button type="submit" class="btn-send">
+            Enviar mensaje
+            <span class="btn-icon" aria-hidden="true">→</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer role="contentinfo">
+    <div class="footer-top rv">
+      <span class="footer-tag">Reservas &amp; Dudas</span>
+      <a href="mailto:info@umet.es" class="giant-email-link">info@umet.es</a>
+    </div>
+    
+    <div class="footer-bottom">
+      <span class="footer-brand">ÜMET | Chef Privado</span>
+      <div class="footer-right">
+        <span>© 2026 Ümet Robert</span>
+        <span class="f-dot" aria-hidden="true">·</span>
+        <a href="https://www.instagram.com/umet_robert" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <span class="f-dot" aria-hidden="true">·</span>
+        <span>España</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Blueprint Button -->
+  <button id="blueprintToggle" class="blueprint-toggle" aria-label="Alternar modo blueprint técnico">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm2 2h8v8H8V8zm2 2v4h4v-4h-4z" />
+    </svg>
+    <span>Ver Blueprint</span>
+  </button>
+
+  <!-- ── JS ── -->
+  <script>
+    'use strict';
+
+    /* Split hero title into individual letter spans */
+    const title = document.querySelector('.hero-display-title');
+    if (title) {
+      const text = title.textContent.trim();
+      title.innerHTML = '';
+      [...text].forEach((char, i) => {
+        const span = document.createElement('span');
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        span.style.transitionDelay = `${i * 0.04}s`;
+        title.appendChild(span);
+      });
+    }
+
+    /* Hero load */
+    requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
+
+    /* Nav toggle and Overlay */
+    const toggle = document.getElementById('navToggle');
+    const heroToggle = document.getElementById('heroNavToggle');
+    const overlay = document.getElementById('mobOverlay');
+
+    function openNav() {
+      toggle.classList.add('open');
+      if (heroToggle) heroToggle.classList.add('open');
+      overlay.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeNav() {
+      toggle.classList.remove('open');
+      if (heroToggle) heroToggle.classList.remove('open');
+      overlay.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', () => toggle.classList.contains('open') ? closeNav() : openNav());
+    toggle.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); } });
+    
+    if (heroToggle) {
+      heroToggle.addEventListener('click', () => heroToggle.classList.contains('open') ? closeNav() : openNav());
+      heroToggle.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); heroToggle.click(); } });
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeNav(); closeLB(); } });
+
+    /* Scroll reveal */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.07, rootMargin: '0px 0px -44px 0px' });
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+    /* Fixed navigation visibility on scroll */
+    const fixedNav = document.querySelector('nav');
+    function handleScroll() {
+      if (scrollY > 120) {
+        fixedNav.classList.add('visible');
+      } else {
+        fixedNav.classList.remove('visible');
+      }
+    }
+    addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    /* Hero portrait parallax */
+    const portraitImg = document.querySelector('.hero-portrait-img');
+    if (portraitImg && matchMedia('(min-width:900px)').matches) {
+      let tick = false;
+      addEventListener('scroll', () => {
+        if (!tick) {
+          requestAnimationFrame(() => {
+            if (scrollY < innerHeight) {
+              portraitImg.style.transform = `translate3d(0, ${scrollY * 0.08}px, 0)`;
+            }
+            tick = false;
+          });
+          tick = true;
+        }
+      }, { passive: true });
+    }
+
+    /* Lightbox */
+    const lb    = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+
+    document.querySelectorAll('.gal-item img, .trajectory-thumb img').forEach(img => {
+      img.addEventListener('click', () => {
+        lbImg.src = img.src.replace(/w=\d+/, 'w=1600');
+        lbImg.alt = img.alt;
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        lbClose.focus();
+      });
+    });
+    function closeLB() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(() => { lbImg.src = ''; }, 400);
+    }
+    lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
+    lbClose.addEventListener('click', closeLB);
+    lbClose.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeLB(); } });
+
+    /* Contact form */
+    document.getElementById('cForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('.btn-send');
+      const nombre  = this.nombre.value.trim();
+      const email   = this.email.value.trim();
+      const mensaje = this.mensaje.value.trim();
+      if (!nombre || !email || !mensaje) return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        this.email.style.borderColor = '#a04030';
+        this.email.focus();
+        setTimeout(() => { this.email.style.borderColor = ''; }, 2600);
+        return;
+      }
+      const orig = btn.innerHTML;
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.innerHTML = 'Enviado ✓';
+        btn.style.cssText = 'background:var(--gold);border-color:var(--gold)';
+        this.reset();
+        setTimeout(() => {
+          btn.innerHTML = orig;
+          btn.style.cssText = '';
+          btn.disabled = false;
+        }, 4000);
+      }, 1200);
+    });
+
+    /* Blueprint toggle script */
+    const bpToggle = document.getElementById('blueprintToggle');
+    bpToggle.addEventListener('click', () => {
+      document.body.classList.toggle('blueprint-mode');
+      const textNode = bpToggle.querySelector('span');
+      if (document.body.classList.contains('blueprint-mode')) {
+        textNode.textContent = 'Ver Diseño';
+      } else {
+        textNode.textContent = 'Ver Blueprint';
+      }
+    });
+
+    /* Collapsible helper script */
+    function toggleCollapsible(id, btn) {
+      const wrapper = document.getElementById(id);
+      wrapper.classList.toggle('expanded');
+      
+      const span = btn.querySelector('span');
+      const svg = btn.querySelector('svg');
+      
+      const isExpanded = wrapper.classList.contains('expanded');
+      
+      if (isExpanded) {
+        span.textContent = span.textContent.replace('Ver más', 'Ver menos');
+        svg.style.transform = 'rotate(180deg)';
+      } else {
+        span.textContent = span.textContent.replace('Ver menos', 'Ver más');
+        svg.style.transform = '';
+      }
+    }
+  </script>
+
+</body>
+</html>
