@@ -1417,6 +1417,119 @@
     body.blueprint-mode .diario-item {
       outline: 1px dashed var(--gold-30);
     }
+
+    /* ─── INSTAGRAM FEED ─── */
+    .instagram-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+    }
+    .instagram-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 16px;
+    }
+    .instagram-info p {
+      font-size: 16px;
+      color: var(--ink-55);
+      max-width: 36ch;
+      text-align: right;
+      line-height: 1.6;
+    }
+    .btn-ig-follow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border-bottom: 1.5px solid var(--gold);
+      padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .btn-ig-follow:hover {
+      color: var(--gold);
+    }
+    .instagram-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .ig-card {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      display: block;
+      background: #E8E6E3;
+    }
+    .ig-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.1);
+      transition: transform 0.8s var(--expo);
+    }
+    .ig-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(17,17,17,0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.4s var(--expo);
+      color: var(--bg);
+    }
+    .ig-overlay svg {
+      width: 20px;
+      height: 20px;
+      transform: translateY(10px);
+      transition: transform 0.4s var(--spring);
+    }
+    .ig-overlay span {
+      font-family: var(--sans);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      transform: translateY(10px);
+      transition: transform 0.4s var(--spring) 0.05s;
+    }
+    .ig-card:hover img {
+      transform: scale(1.05);
+    }
+    .ig-card:hover .ig-overlay {
+      opacity: 1;
+    }
+    .ig-card:hover .ig-overlay svg,
+    .ig-card:hover .ig-overlay span {
+      transform: translateY(0);
+    }
+
+    body.blueprint-mode .ig-card {
+      outline: 1.5px dashed var(--gold-55) !important;
+    }
+
+    @media (max-width: 900px) {
+      .instagram-header {
+        flex-direction: column;
+        align-items: start;
+        gap: 16px;
+      }
+      .instagram-info {
+        align-items: start;
+      }
+      .instagram-info p {
+        text-align: left;
+      }
+      .instagram-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
     
     /* ─── EDITORIAL EXTRA TOUCHES ─── */
     .editorial-dropcap::first-letter {
@@ -1724,6 +1837,59 @@
         margin: 12px 0 24px 0;
       }
     }
+
+    /* ─── LIGHTBOX PREMIUM STYLES ─── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(17, 17, 17, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--expo);
+    }
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transform: scale(0.95);
+      transition: transform 0.4s var(--expo);
+    }
+    .lightbox.open img {
+      transform: scale(1);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      color: var(--bg);
+      font-size: 36px;
+      cursor: pointer;
+      font-weight: 300;
+      transition: color 0.3s, transform 0.3s;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .lightbox-close:hover {
+      color: var(--gold);
+      transform: rotate(90deg);
+      background: rgba(255, 255, 255, 0.1);
+    }
   </style>
 </head>
 
@@ -1744,6 +1910,7 @@
       <li><a href="#servicios">Servicios</a></li>
       <li><a href="#experiencia">Trayectoria</a></li>
       <li><a href="#diario">Diario</a></li>
+      <li><a href="#instagram">Instagram</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
     <div class="nav-toggle" id="navToggle" role="button" tabindex="0" aria-expanded="false" aria-label="Abrir menú">
@@ -1756,6 +1923,7 @@
     <a href="#servicios"   onclick="closeNav()">Servicios</a>
     <a href="#experiencia" onclick="closeNav()">Trayectoria</a>
     <a href="#diario"      onclick="closeNav()">Diario</a>
+    <a href="#instagram"   onclick="closeNav()">Instagram</a>
     <a href="#contacto"    onclick="closeNav()">Contacto</a>
   </div>
 
@@ -1770,6 +1938,7 @@
           <a href="#servicios">Servicios</a>
           <a href="#experiencia">Trayectoria</a>
           <a href="#diario">Diario</a>
+          <a href="#instagram">Instagram</a>
           <a href="#contacto">Contacto</a>
         </div>
         <div class="hero-toggle" id="heroNavToggle" role="button" tabindex="0" aria-label="Abrir menú">
@@ -2164,6 +2333,71 @@
     </div>
   </section>
 
+  <!-- ── INSTAGRAM ── -->
+  <section id="instagram" class="section-spacing" aria-label="Instagram de Ümet Robert">
+    <div class="inner-max">
+      <div class="instagram-header rv">
+        <div>
+          <span class="draft-badge">Sección: Feed de Instagram</span>
+          <span class="editorial-eyebrow">Instagram</span>
+          <h2 class="editorial-title">Siga la cocina<br><em>en directo</em></h2>
+        </div>
+        <div class="instagram-info">
+          <p>Historias cotidianas, procesos detrás del fuego y creaciones diarias en directo.</p>
+          <a href="https://www.instagram.com/umet_robert" target="_blank" rel="noopener noreferrer" class="btn-ig-follow">
+            Seguir en @umet_robert
+          </a>
+        </div>
+      </div>
+      
+      <div class="instagram-grid rv d1">
+        <!-- Post 1 -->
+        <a href="https://www.instagram.com/umet_robert" target="_blank" rel="noopener noreferrer" class="ig-card">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80&auto=format&fit=crop" alt="Cocina del chef en instagram">
+          <div class="ig-overlay">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+            </svg>
+            <span>Ver publicación</span>
+          </div>
+        </a>
+        
+        <!-- Post 2 -->
+        <a href="https://www.instagram.com/umet_robert" target="_blank" rel="noopener noreferrer" class="ig-card">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&auto=format&fit=crop" alt="Detalle de mesa de comedor privada">
+          <div class="ig-overlay">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+            </svg>
+            <span>Ver publicación</span>
+          </div>
+        </a>
+        
+        <!-- Post 3 -->
+        <a href="https://www.instagram.com/umet_robert" target="_blank" rel="noopener noreferrer" class="ig-card">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80&auto=format&fit=crop" alt="Detalle de plato artesanal">
+          <div class="ig-overlay">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+            </svg>
+            <span>Ver publicación</span>
+          </div>
+        </a>
+        
+        <!-- Post 4 -->
+        <a href="https://www.instagram.com/umet_robert" target="_blank" rel="noopener noreferrer" class="ig-card">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&q=80&auto=format&fit=crop" alt="Verduras locales y producto fresco">
+          <div class="ig-overlay">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+            </svg>
+            <span>Ver publicación</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ── BANNER PROMOCIONAL ── -->
   <section class="promo-banner" aria-label="Reserva de experiencias">
     <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=1600&q=80&auto=format&fit=crop" class="promo-banner-bg" alt="Cocina profesional con fuego">
@@ -2431,6 +2665,12 @@
       }
     }
   </script>
+
+  <!-- Lightbox Container -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-label="Imagen ampliada" aria-hidden="true">
+    <button id="lbClose" class="lightbox-close" aria-label="Cerrar imagen">&times;</button>
+    <img id="lbImg" src="" alt="">
+  </div>
 
 </body>
 </html>
